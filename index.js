@@ -1,4 +1,4 @@
-﻿import fs from "fs";
+import fs from "fs";
 import path from "path";
 
 const DATA_FILE = path.join(process.cwd(), "tasks.json");
@@ -41,13 +41,22 @@ function addTask(description) {
   console.log(`Added task #${task.id}: ${task.description}`);
 }
 
-function listTasks() {
+function listTasks(filter) {
   const tasks = loadTasks();
-  if (tasks.length === 0) {
-    console.log('No tasks yet. Add one with: node index.js add "Do something"');
+  let toShow = tasks;
+
+  if (filter === "done") {
+    toShow = tasks.filter((t) => t.done);
+  } else if (filter === "pending") {
+    toShow = tasks.filter((t) => !t.done);
+  }
+
+  if (toShow.length === 0) {
+    console.log("No tasks match.");
     return;
   }
-  tasks.forEach((t) => {
+
+  toShow.forEach((t) => {
     const box = t.done ? "[x]" : "[ ]";
     console.log(`${box} #${t.id}  ${t.description}`);
   });
@@ -80,12 +89,19 @@ function removeTask(id) {
 function main() {
   const [, , command, ...args] = process.argv;
 
+  const filterIndex = args.indexOf("--filter");
+  let filter = null;
+  if (filterIndex !== -1) {
+    filter = args[filterIndex + 1];
+    args.splice(filterIndex, 2);
+  }
+
   switch (command) {
     case "add":
       addTask(args.join(" "));
       break;
     case "list":
-      listTasks();
+      listTasks(filter);
       break;
     case "done":
       completeTask(args[0]);
@@ -99,6 +115,8 @@ function main() {
 Usage:
   node index.js add "<description>"
   node index.js list
+  node index.js list --filter done
+  node index.js list --filter pending
   node index.js done <id>
   node index.js remove <id>
 `);
