@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "description": "Buy milk",
+    "done": true,
+    "createdAt": "2026-06-22T15:00:32.552Z"
+  },
+  {
+    "id": 2,
+    "description": "Finish onboarding",
+    "done": false,
+    "createdAt": "2026-06-22T15:01:01.443Z"
+  }
+]
