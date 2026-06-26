@@ -1,0 +1,17 @@
+{
+  "name": "task-manager-api",
+  "version": "1.0.0",
+  "description": "Week 2: Task manager API",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "@prisma/client": "^5.18.0"
+  },
+  "devDependencies": {
+    "prisma": "^5.18.0"
+  }
+}
